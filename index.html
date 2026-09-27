@@ -1,22 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netlify Test</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyCast Weather</title>
+    <meta
+      name="description"
+      content="A modern weather dashboard with hourly and weekly forecast."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">☁</div>
+          <div>
+            <p class="eyebrow">Weather</p>
+            <h1>SkyCast</h1>
+          </div>
+        </div>
 
-    <main class="container">
-        <h1>Version 1 before</h1>
-        <h1>Version 2 now</h1>
-        <p>This is my GitHub + Netlify deployment test.</p>
+        <form class="search-bar" id="searchForm">
+          <input
+            id="cityInput"
+            type="text"
+            placeholder="Search city"
+            aria-label="Search city"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </header>
 
-        <button id="testButton">Click Me</button>
-        <p id="message"></p>
-    </main>
+      <main class="weather-app">
+        <section class="hero-card">
+          <div class="hero-top">
+            <div>
+              <p class="label">Current location</p>
+              <h2 id="cityName">Dhaka</h2>
+            </div>
+            <div class="status-pill" id="weatherStatus">Clear sky</div>
+          </div>
+
+          <div class="hero-content">
+            <div class="temp-panel">
+              <div class="weather-icon" id="weatherIcon">☀️</div>
+              <div>
+                <div class="temperature" id="currentTemp">32°</div>
+                <div class="feels-like" id="feelsLike">Feels like 34°</div>
+              </div>
+            </div>
+
+            <div class="meta-grid">
+              <div class="meta-box">
+                <span>Humidity</span>
+                <strong id="humidity">58%</strong>
+              </div>
+              <div class="meta-box">
+                <span>Wind</span>
+                <strong id="wind">12 km/h</strong>
+              </div>
+              <div class="meta-box">
+                <span>Visibility</span>
+                <strong id="visibility">10 km</strong>
+              </div>
+              <div class="meta-box">
+                <span>UV Index</span>
+                <strong id="uvIndex">Moderate</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-bottom">
+            <div>
+              <p class="label">Today</p>
+              <strong id="todayDate">Sunday, 27 Sep</strong>
+            </div>
+            <div>
+              <p class="label">Sunrise</p>
+              <strong id="sunrise">05:42 AM</strong>
+            </div>
+            <div>
+              <p class="label">Sunset</p>
+              <strong id="sunset">06:11 PM</strong>
+            </div>
+          </div>
+        </section>
+
+        <aside class="sidebar-card">
+          <div class="panel-header">
+            <h3>Popular cities</h3>
+          </div>
+          <div class="city-list" id="cityList">
+            <button class="city-chip active" data-city="Dhaka">Dhaka</button>
+            <button class="city-chip" data-city="Tokyo">Tokyo</button>
+            <button class="city-chip" data-city="London">London</button>
+            <button class="city-chip" data-city="New York">New York</button>
+            <button class="city-chip" data-city="Dubai">Dubai</button>
+          </div>
+
+          <div class="air-box">
+            <div class="panel-header small-gap">
+              <h3>Air Quality</h3>
+              <span class="aqi-tag" id="aqiTag">Good</span>
+            </div>
+            <div class="aqi-value" id="aqiValue">21</div>
+            <p id="airText">Fresh air and comfortable outdoor conditions.</p>
+          </div>
+        </aside>
+
+        <section class="forecast-card hourly-card">
+          <div class="panel-header">
+            <h3>Hourly forecast</h3>
+            <span>Next 12 hours</span>
+          </div>
+          <div class="hourly-grid" id="hourlyForecast"></div>
+        </section>
+
+        <section class="forecast-card weekly-card">
+          <div class="panel-header">
+            <h3>7-day forecast</h3>
+            <span>Extended outlook</span>
+          </div>
+          <div class="daily-list" id="dailyForecast"></div>
+        </section>
+      </main>
+    </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
