@@ -1,4 +1,42 @@
 const fallbackWeatherData = {
+  Rajshahi: {
+    city: "Rajshahi",
+    condition: "Warm and sunny",
+    icon: "☀️",
+    temp: 33,
+    feelsLike: 35,
+    humidity: 60,
+    wind: 11,
+    visibility: 10,
+    uv: "Moderate",
+    sunrise: "05:38 AM",
+    sunset: "06:09 PM",
+    aqi: 24,
+    airText: "Comfortable weather in Rajshahi with a bright and warm day.",
+    hourly: [
+      { time: "Now", temp: 33, icon: "☀️" },
+      { time: "1 PM", temp: 34, icon: "🌤️" },
+      { time: "2 PM", temp: 35, icon: "☀️" },
+      { time: "3 PM", temp: 36, icon: "🌤️" },
+      { time: "4 PM", temp: 35, icon: "🌥️" },
+      { time: "5 PM", temp: 33, icon: "🌤️" },
+      { time: "6 PM", temp: 31, icon: "🌦️" },
+      { time: "7 PM", temp: 30, icon: "🌧️" },
+      { time: "8 PM", temp: 29, icon: "🌦️" },
+      { time: "9 PM", temp: 28, icon: "🌙" },
+      { time: "10 PM", temp: 28, icon: "🌙" },
+      { time: "11 PM", temp: 27, icon: "🌙" }
+    ],
+    daily: [
+      { day: "Mon", icon: "☀️", high: 35, low: 28, rain: "12%" },
+      { day: "Tue", icon: "🌤️", high: 36, low: 29, rain: "18%" },
+      { day: "Wed", icon: "🌦️", high: 33, low: 27, rain: "40%" },
+      { day: "Thu", icon: "⛈️", high: 31, low: 26, rain: "64%" },
+      { day: "Fri", icon: "🌤️", high: 34, low: 28, rain: "20%" },
+      { day: "Sat", icon: "☀️", high: 35, low: 29, rain: "10%" },
+      { day: "Sun", icon: "🌤️", high: 34, low: 28, rain: "15%" }
+    ]
+  },
   Dhaka: {
     city: "Dhaka",
     condition: "Warm and sunny",
@@ -158,7 +196,7 @@ function updateWeatherData(data) {
 }
 
 function updateWeather(cityKey) {
-  const data = fallbackWeatherData[cityKey] || fallbackWeatherData.Dhaka;
+  const data = fallbackWeatherData[cityKey] || fallbackWeatherData.Rajshahi;
   updateWeatherData(data);
 }
 
@@ -263,7 +301,7 @@ searchForm.addEventListener("submit", async (event) => {
   try {
     await fetchWeatherByCity(typedCity);
   } catch (error) {
-    updateWeather("Dhaka");
+    updateWeather("Rajshahi");
     cityDisplay.textContent = typedCity;
     airText.textContent = `Showing a nearby sample view for ${typedCity}.`;
   }
@@ -275,14 +313,16 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     (position) => {
       fetchWeatherByCoordinates(position.coords.latitude, position.coords.longitude).catch(() => {
-        updateWeather("Dhaka");
+        updateWeather("Rajshahi");
       });
     },
     () => {
-      updateWeather("Dhaka");
+      updateWeather("Rajshahi");
     },
     { enableHighAccuracy: true, timeout: 10000 }
   );
 } else {
-  updateWeather("Dhaka");
+  updateWeather("Rajshahi");
 }
+
+updateWeather("Rajshahi");
