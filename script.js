@@ -41,7 +41,7 @@ const fallbackWeatherData = {
 
 const cityInput = document.getElementById("cityInput");
 const searchForm = document.getElementById("searchForm");
-const cityName = document.getElementById("cityName");
+const cityDisplay = document.getElementById("cityName");
 const currentTemp = document.getElementById("currentTemp");
 const feelsLike = document.getElementById("feelsLike");
 const humidity = document.getElementById("humidity");
@@ -133,7 +133,7 @@ function renderDaily(list) {
 }
 
 function updateWeatherData(data) {
-  cityName.textContent = data.city;
+  cityDisplay.textContent = data.city;
   currentTemp.textContent = `${Math.round(data.temp)}°`;
   feelsLike.textContent = `Feels like ${Math.round(data.feelsLike)}°`;
   humidity.textContent = `${data.humidity}%`;
@@ -220,8 +220,8 @@ async function fetchWeatherByCoordinates(latitude, longitude) {
   buildWeatherSnapshot(city, data.current, data.hourly, data.daily);
 }
 
-async function fetchWeatherByCity(cityName) {
-  const searchUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`;
+async function fetchWeatherByCity(cityQuery) {
+  const searchUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityQuery)}&count=1&language=en&format=json`;
   const searchResponse = await fetch(searchUrl);
 
   if (!searchResponse.ok) {
@@ -235,10 +235,11 @@ async function fetchWeatherByCity(cityName) {
     throw new Error("City not found");
   }
 
+  const city = result.name;
   await fetchWeatherByCoordinates(result.latitude, result.longitude);
-  cityName = result.name;
+  cityDisplay.textContent = city;
   cityButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.city === cityName);
+    button.classList.toggle("active", button.dataset.city === city);
   });
 }
 
@@ -263,7 +264,7 @@ searchForm.addEventListener("submit", async (event) => {
     await fetchWeatherByCity(typedCity);
   } catch (error) {
     updateWeather("Dhaka");
-    cityName.textContent = typedCity;
+    cityDisplay.textContent = typedCity;
     airText.textContent = `Showing a nearby sample view for ${typedCity}.`;
   }
 
